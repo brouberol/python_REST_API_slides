@@ -50,8 +50,8 @@
 				<li><b>Re</b>presentational <b>s</b>tate <b>t</b>ransfer</li>
 				<li>Based on HTTP: <b>GET, POST, PUT, DELETE</b>, HEAD, OPTIONS, PATCH
 				<ul>
-					<li><code>GET /user/:id</code> → retrieve user information
-					<li><code>PUT /user/:id</code> → update user information
+					<li><code>GET /user/:id</code> → retrieve user record
+					<li><code>PUT /user/:id</code> → update user record
 					<li><code>DELETE /user/:id</code> → delete user record
 				</ul>
 				<li>Any programming language supporting HTTP can be used to communicate with the API
@@ -66,10 +66,10 @@
 				<h2>HTTP and Python: a profusion of modules!</h2>
 			</header>
 			<ul>
-				<li><code>urllib2</code>
-				<li><code>httplib2</code>
-				<li><code>pycurl</code>
-				<li><code>requests</code>
+				<li><code><a href="http://docs.python.org/release/2.7.2/library/urllib2.html">urllib2</a></code>
+				<li><code><a href="https://code.google.com/p/httplib2">httplib2</a></code>
+				<li><code><a href="http://curl.haxx.se/libcurl/python/">pycurl</a></code>
+				<li><code><a href="http://docs.python-requests.org/en/latest/index.html">requests</a></code>
 			</ul>
 			Let's see how to create a repository using the Github RESTful API.<br/>
 				<ul>
@@ -93,8 +93,9 @@
 				<code>auth = urllib2.<span class="func">HTTPBasicAuthHandler</span>(password_mgr)</code>
 				<code>opener = urllib2.<span class="func">build_opener</span>(auth)</code>
 				<code>urllib2.<span class="func">install_opener</span>(opener)</code>
-				<code>handler = urllib2.<span class="func">urlopen</span>(request, urllib.<span class="func">urlencode</span>({<span class="str">'name'</span>:<span class="str">'test'</span>}))</code>
-				<code><span class="kw">print</span> handler.<span class="func">read</span>() <span class="com"> # JSON-formatted result</span></code> 
+				<code>data = urllib.<span class="func">urlencode</span>({<span class="str">'name'</span>:<span class="str">'test'</span>})<span class="com"> # Manual data encoding</span></code>
+				<code>handler = urllib2.<span class="func">urlopen</span>(request, data)</code>
+				<code><span class="kw">print</span> handler.<span class="func">read</span>()</code>
 			</pre>
 		</section>
 	</div></div>
@@ -106,9 +107,9 @@
 			<pre>
 			<code><span class="kw">import</span> urllib, httplib2</code>
 			<code>github_url = <span class="str">'https://api.github.com/user/repos'</span></code>
-			<code>h = httplib2.<span class="func">Http</span>(<span class="str">'.cache'</span>)<span class="com"> # WAT?</span></code>
+			<code>h = httplib2.<span class="func">Http</span>(<span class="str">'.cache'</span>)<span class="com"> # WAT? When do I <b>not</b> use HTTP?</span></code>
 			<code>h.<span class="func">add_credentials</span>(<span class="str">'BaltoRouberol'</span>, <span class="str">'*****'</span>, <span class="str">'https://api.github.com'</span>)</code>
-			<code>data = urllib.<span class="func">urlencode</span>({<span class="str">'name'</span>:<span class="str">'test'</span>})</code>
+			<code>data = urllib.<span class="func">urlencode</span>({<span class="str">'name'</span>:<span class="str">'test'</span>})<span class="com"> # Manual data encoding</span></code>
 			<code>resp, content = h.<span class="func">request</span>(github_url, <span class="str">'POST'</span>, data)</code>
 			<code><span class="kw">print</span> content</code>
 		</pre>
@@ -117,7 +118,7 @@
 	<div class="slide" id="401"><div>
 		<section>
 			<header>
-				<h2>Haha. You thought your were done... 😿</h2>
+				<h2>You thought your were done? Haha. 😿</h2>
 			</header>
 			<ul>
 				<li>GitHub has secured endpoints.
